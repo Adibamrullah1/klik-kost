@@ -2,33 +2,36 @@
 
 "use client";
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import styles from './register.module.css';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import styles from "./register.module.css";
 import {
   MdOutlineMailOutline,
   MdLockOutline,
   MdVisibilityOff,
-  MdPersonOutline
-} from 'react-icons/md';
-import { FcGoogle } from 'react-icons/fc';
-import { auth } from '@/lib/firebase';
-import {
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup
-} from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
+  MdPersonOutline,
+} from "react-icons/md";
+import { FcGoogle } from "react-icons/fc";
+import { useAuth } from "@/context/AuthContext"; // pakai context
+import { FirebaseError } from "firebase/app";
 
 const RegisterPage = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { user, register, googleLogin } = useAuth();
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+
+  // 🔁 Jika sudah login, langsung ke /home
+  useEffect(() => {
+    if (user) {
+      router.push("/main/home");
+    }
+  }, [user, router]);
 
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,39 +43,32 @@ const RegisterPage = () => {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Pengguna berhasil didaftarkan:', userCredential.user);
-      router.push('/home');
-    } catch (err: unknown) {
+      await register(email, password); // pakai context
+      console.log("Register berhasil");
+      router.push("/login"); // redirect ke login
+    } catch (err: any) {
       if (err instanceof FirebaseError) {
-        console.error("Firebase error saat mendaftar:", err.code);
-        if (err.code === 'auth/email-already-in-use') {
-          setError('Alamat email ini sudah terdaftar.');
+        if (err.code === "auth/email-already-in-use") {
+          setError("Alamat email ini sudah terdaftar.");
         } else {
-          setError('Terjadi kesalahan saat mendaftar.');
+          setError("Terjadi kesalahan saat mendaftar.");
         }
       } else {
-        console.error("Non-Firebase error:", err);
-        setError('Terjadi kesalahan tak terduga.');
+        setError("Terjadi kesalahan tak terduga.");
       }
     }
   };
 
   const handleGoogleSignIn = async () => {
     setError(null);
-    const provider = new GoogleAuthProvider();
-
     try {
-      const result = await signInWithPopup(auth, provider);
-      console.log('Pengguna berhasil masuk dengan Google:', result.user);
-      router.push('/home');
-    } catch (err: unknown) {
+      await googleLogin(); // pakai context
+      router.push("/home");
+    } catch (err: any) {
       if (err instanceof FirebaseError) {
-        console.error("Firebase error saat masuk dengan Google:", err.code);
-        setError('Gagal masuk dengan Google.');
+        setError("Gagal masuk dengan Google.");
       } else {
-        console.error("Non-Firebase error:", err);
-        setError('Terjadi kesalahan saat login Google.');
+        setError("Terjadi kesalahan saat login Google.");
       }
     }
   };
@@ -81,7 +77,12 @@ const RegisterPage = () => {
     <main className={styles.container}>
       <div className={styles.registerBox}>
         <div className={styles.illustrationContainer}>
-          <Image src="/image/register.png" alt="Sign Up Illustration" width={300} height={200} />
+          <Image
+            src="/image/register.png"
+            alt="Sign Up Illustration"
+            width={300}
+            height={200}
+          />
         </div>
         <h1 className={styles.title}>Sign Up</h1>
         {error && <p className={styles.errorMessage}>{error}</p>}
@@ -99,7 +100,8 @@ const RegisterPage = () => {
             />
           </div>
           <div className={styles.inputGroup}>
-            <span className={styles.flag}>🇮🇩</span><span className={styles.countryCode}>+62</span>
+            <span className={styles.flag}>🇮🇩</span>
+            <span className={styles.countryCode}>+62</span>
             <input
               type="tel"
               placeholder="Nomor telepon"
@@ -129,15 +131,20 @@ const RegisterPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <MdVisibilityOff className={styles.icon} style={{ cursor: 'pointer' }} />
+            <MdVisibilityOff className={styles.icon} style={{ cursor: "pointer" }} />
           </div>
           <p className={styles.terms}>
-            Dengan mendaftar, Anda menyetujui <a href="/terms">Syarat & Ketentuan</a> dan <a href="/privacy">Kebijakan Privasi</a> Kami
+            Dengan mendaftar, Anda menyetujui <a href="/terms">Syarat & Ketentuan</a> dan{" "}
+            <a href="/privacy">Kebijakan Privasi</a> Kami
           </p>
-          <button type="submit" className={styles.buttonPrimary}>Daftar</button>
+          <button type="submit" className={styles.buttonPrimary}>
+            Daftar
+          </button>
         </form>
 
-        <div className={styles.separator}><span>Atau</span></div>
+        <div className={styles.separator}>
+          <span>Atau</span>
+        </div>
         <button onClick={handleGoogleSignIn} className={styles.buttonSecondary}>
           <FcGoogle size={22} />
           <span>Daftar dengan Google</span>

@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'; // Untuk redirect
 import styles from './home.module.css';
 import { HiOutlineHeart, HiOutlineBell, HiOutlineSearch } from "react-icons/hi";
 import { FaStar } from "react-icons/fa";
+import ProtectedPage from '@/components/ProtectedPage'; // Pastikan path ini benar
 
 // 1. Impor useAuth dan useEffect
 import { useAuth } from '@/context/AuthContext';
@@ -83,5 +84,10 @@ const HomePage = () => {
     </div>
   );
 };
-
-export default HomePage;
+export default function ProtectedHome() {
+  return (
+    <ProtectedPage>
+      <HomePage />
+    </ProtectedPage>
+  );
+}

@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -11,35 +11,36 @@ import {
   MdOutlineMailOutline,
   MdLockOutline,
   MdVisibilityOff,
-  MdVisibility
+  MdVisibility,
 } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
-import {
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup
-} from 'firebase/auth';
-import { auth } from '@/lib/firebase';
 import { FirebaseError } from 'firebase/app';
+import { useAuth } from '@/context/AuthContext'; // GUNAKAN CONTEXT
 
 const LoginPage = () => {
+  const { user, login, googleLogin } = useAuth(); // Gunakan fungsi dari context
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
+  // Auto-redirect jika user sudah login
+  useEffect(() => {
+    if (user) {
+      router.push('/main/home');
+    }
+  }, [user, router]);
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      console.log('Login berhasil:', result.user);
+      await login(email, password); // Pakai context
       router.push('/home');
-    } catch (err: unknown) {
+    } catch (err: any) {
       if (err instanceof FirebaseError) {
-        console.error('Firebase error saat login:', err.code);
         if (err.code === 'auth/user-not-found') {
           setError('Pengguna tidak ditemukan.');
         } else if (err.code === 'auth/wrong-password') {
@@ -48,7 +49,6 @@ const LoginPage = () => {
           setError('Terjadi kesalahan saat login.');
         }
       } else {
-        console.error('Non-Firebase error:', err);
         setError('Terjadi kesalahan yang tidak diketahui.');
       }
     }
@@ -56,19 +56,14 @@ const LoginPage = () => {
 
   const handleGoogleLogin = async () => {
     setError(null);
-    const provider = new GoogleAuthProvider();
-
     try {
-      const result = await signInWithPopup(auth, provider);
-      console.log('Login Google berhasil:', result.user);
+      await googleLogin(); // Pakai context
       router.push('/home');
-    } catch (err: unknown) {
+    } catch (err: any) {
       if (err instanceof FirebaseError) {
-        console.error("Firebase error saat login dengan Google:", err.code);
         setError('Gagal login dengan Google.');
       } else {
-        console.error("Non-Firebase error:", err);
-        setError('Terjadi kesalahan tak terduga saat login Google.');
+        setError('Terjadi kesalahan saat login Google.');
       }
     }
   };
@@ -81,7 +76,6 @@ const LoginPage = () => {
         </div>
 
         <h1 className={styles.title}>Login</h1>
-
         {error && <p className={styles.errorMessage}>{error}</p>}
 
         <form onSubmit={handleLogin} className={styles.form}>
@@ -115,7 +109,6 @@ const LoginPage = () => {
           </div>
 
           <a href="#" className={styles.forgotPassword}>Lupa password?</a>
-
           <button type="submit" className={styles.buttonPrimary}>Masuk</button>
         </form>
 
