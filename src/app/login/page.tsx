@@ -1,62 +1,110 @@
-// src/app/login/page.tsx
+"use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
 import { MdOutlineMailOutline, MdLockOutline, MdVisibilityOff, MdVisibility } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 const LoginPage = () => {
-  // Nanti kita akan tambahkan state untuk input dan show/hide password di sini
-  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Login berhasil:', result.user);
+      router.push('/home');
+    } catch (err: any) {
+      console.error(err);
+      if (err.code === 'auth/user-not-found') {
+        setError('Pengguna tidak ditemukan.');
+      } else if (err.code === 'auth/wrong-password') {
+        setError('Password salah.');
+      } else {
+        setError('Terjadi kesalahan saat login.');
+      }
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError(null);
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log('Login Google berhasil:', result.user);
+      router.push('/home');
+    } catch (err) {
+      console.error(err);
+      setError('Gagal login dengan Google.');
+    }
+  };
+
   return (
     <main className={styles.container}>
       <div className={styles.loginBox}>
-        {/* Ilustrasi Utama */}
         <div className={styles.illustrationContainer}>
-           <Image 
-             src="/image/login.png"// Ganti nama file jika berbeda
-             alt="Login Illustration"
-             width={250} // Sesuaikan ukurannya
-             height={250} // Sesuaikan ukurannya
-           />
+          <Image src="/image/login.png" alt="Login Illustration" width={250} height={250} />
         </div>
 
         <h1 className={styles.title}>Login</h1>
 
-        <form className={styles.form}>
-          {/* Input Email */}
+        {error && <p className={styles.errorMessage}>{error}</p>}
+
+        <form onSubmit={handleLogin} className={styles.form}>
           <div className={styles.inputGroup}>
             <MdOutlineMailOutline className={styles.icon} />
-            <input type="email" placeholder="Email ID" className={styles.input} />
+            <input
+              type="email"
+              placeholder="Email ID"
+              className={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
 
-          {/* Input Password */}
           <div className={styles.inputGroup}>
             <MdLockOutline className={styles.icon} />
-            <input type="password" placeholder="Password" className={styles.input} />
-            {/* Ikon untuk show/hide password, fungsionalitasnya akan kita tambahkan nanti */}
-            <MdVisibilityOff className={styles.icon} style={{ cursor: 'pointer' }}/>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              className={styles.input}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            {showPassword ? (
+              <MdVisibility className={styles.icon} onClick={() => setShowPassword(false)} />
+            ) : (
+              <MdVisibilityOff className={styles.icon} onClick={() => setShowPassword(true)} />
+            )}
           </div>
 
           <a href="#" className={styles.forgotPassword}>Lupa password?</a>
 
-          <button type="submit" className={styles.buttonPrimary}>
-            Masuk
-          </button>
+          <button type="submit" className={styles.buttonPrimary}>Masuk</button>
         </form>
 
-        <div className={styles.separator}>
-          <span>Atau</span>
-        </div>
+        <div className={styles.separator}><span>Atau</span></div>
 
-        <button className={styles.buttonSecondary}>
+        <button onClick={handleGoogleLogin} className={styles.buttonSecondary}>
           <FcGoogle size={22} />
           <span>Masuk dengan Google</span>
         </button>
 
         <p className={styles.signupLink}>
-          Belum punya akun? <a href="/register">Daftar sekarang, gratis!</a>
+          Belum punya akun? <Link href="/register">Daftar sekarang</Link>
         </p>
       </div>
     </main>

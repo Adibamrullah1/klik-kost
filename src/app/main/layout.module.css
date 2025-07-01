@@ -1,4 +1,5 @@
-/* src/app/(main)/layout.module.css */
+/* Salin semua kode ini dan timpa file layout.module.css Anda */
+
 .layoutContainer {
   display: flex;
   flex-direction: column;
@@ -30,10 +31,16 @@
 }
 
 .navItem {
-  color: #a0a0a0; /* Warna ikon tidak aktif */
+  color: #94a3b8; /* Diperbarui: Warna ikon tidak aktif lebih soft */
   text-decoration: none;
+  transition: color 0.2s ease-in-out; /* Animasi halus saat ganti warna */
 }
 
 .navItem.active {
-  color: #2c3e50; /* Warna ikon aktif */
+  color: #3f3531; /* Diperbarui: Warna ikon aktif disamakan dengan warna tombol */
+}
+
+/* Opsional: Efek saat disentuh/di-hover */
+.navItem:not(.active):hover {
+    color: #3f3531;
 }
