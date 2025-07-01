@@ -1,3 +1,5 @@
+// src/app/login/page.tsx
+
 "use client";
 
 import React, { useState } from 'react';
@@ -5,10 +7,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from './login.module.css';
-import { MdOutlineMailOutline, MdLockOutline, MdVisibilityOff, MdVisibility } from 'react-icons/md';
+import {
+  MdOutlineMailOutline,
+  MdLockOutline,
+  MdVisibilityOff,
+  MdVisibility
+} from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup
+} from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { FirebaseError } from 'firebase/app';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -17,7 +29,7 @@ const LoginPage = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
@@ -25,14 +37,19 @@ const LoginPage = () => {
       const result = await signInWithEmailAndPassword(auth, email, password);
       console.log('Login berhasil:', result.user);
       router.push('/home');
-    } catch (err: any) {
-      console.error(err);
-      if (err.code === 'auth/user-not-found') {
-        setError('Pengguna tidak ditemukan.');
-      } else if (err.code === 'auth/wrong-password') {
-        setError('Password salah.');
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        console.error('Firebase error saat login:', err.code);
+        if (err.code === 'auth/user-not-found') {
+          setError('Pengguna tidak ditemukan.');
+        } else if (err.code === 'auth/wrong-password') {
+          setError('Password salah.');
+        } else {
+          setError('Terjadi kesalahan saat login.');
+        }
       } else {
-        setError('Terjadi kesalahan saat login.');
+        console.error('Non-Firebase error:', err);
+        setError('Terjadi kesalahan yang tidak diketahui.');
       }
     }
   };
@@ -40,13 +57,19 @@ const LoginPage = () => {
   const handleGoogleLogin = async () => {
     setError(null);
     const provider = new GoogleAuthProvider();
+
     try {
       const result = await signInWithPopup(auth, provider);
       console.log('Login Google berhasil:', result.user);
       router.push('/home');
-    } catch (err) {
-      console.error(err);
-      setError('Gagal login dengan Google.');
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        console.error("Firebase error saat login dengan Google:", err.code);
+        setError('Gagal login dengan Google.');
+      } else {
+        console.error("Non-Firebase error:", err);
+        setError('Terjadi kesalahan tak terduga saat login Google.');
+      }
     }
   };
 
