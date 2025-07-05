@@ -1,0 +1,23 @@
+.pageContainer { background-color: #f9fafb; min-height: 100vh; }
+.header { display: flex; align-items: center; gap: 1rem; padding: 1rem; background-color: white; border-bottom: 1px solid #e5e7eb; }
+.title { font-size: 1.125rem; font-weight: 600; }
+.content { padding: 1rem; }
+.emptyText { text-align: center; color: #6b7280; margin-top: 2rem; }
+.orderList { display: flex; flex-direction: column; gap: 1rem; }
+.orderCard { background-color: white; border-radius: 0.75rem; border: 1px solid #e5e7eb; overflow: hidden; }
+.cardHeader { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background-color: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+.orderId { font-size: 0.75rem; color: #6b7280; font-family: monospace; }
+.status { font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px; }
+.MenungguPembayaran { background-color: #fef3c7; color: #92400e; }
+.Lunas { background-color: #d1fae5; color: #065f46; }
+.PesananDibatalkan { background-color: #fee2e2; color: #991b1b; }
+.cardBody { display: flex; gap: 1rem; padding: 1rem; }
+.kostImage { border-radius: 0.5rem; object-fit: cover; }
+.kostName { font-weight: 600; }
+.checkinDate { font-size: 0.875rem; color: #6b7280; }
+.cardActions { display: flex; gap: 0.5rem; padding: 0 1rem 1rem 1rem; }
+.cancelButton, .payButton { flex-grow: 1; border: 1px solid; padding: 0.5rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+.cancelButton { border-color: #ef4444; color: #ef4444; background-color: white; }
+.cancelButton:hover { background-color: #fee2e2; }
+.payButton { border-color: #3b82f6; color: white; background-color: #3b82f6; }
+.payButton:hover { background-color: #2563eb; }

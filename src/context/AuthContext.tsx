@@ -9,6 +9,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import { useRouter } from 'next/navigation'; // <-- 1. Impor useRouter
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -20,6 +21,7 @@ import {
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
+// ... (type AuthContextType tidak perlu diubah)
 type AuthContextType = {
   user: User | null;
   loading: boolean;
@@ -29,6 +31,7 @@ type AuthContextType = {
   logout: () => Promise<void>;
 };
 
+// ... (createContext tidak perlu diubah)
 const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
@@ -41,6 +44,7 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter(); // <-- 2. Panggil useRouter di dalam komponen
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -66,6 +70,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     await signOut(auth);
+    // 3. Tambahkan baris ini untuk mengarahkan pengguna
+    router.push('/'); 
   };
 
   return (
@@ -81,6 +87,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     >
       {!loading && children}
     </AuthContext.Provider>
+    
   );
 };
 

@@ -1,0 +1,88 @@
+.pageContainer {
+  padding: 24px;
+  background-color: #f9fafb;
+  min-height: 100%;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.avatar {
+  border-radius: 50%;
+  margin-bottom: 16px;
+  border: 3px solid #4f46e5;
+}
+
+.userName {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a2b49;
+}
+
+.userEmail {
+  font-size: 14px;
+  color: #6b7388;
+  margin-top: 4px;
+}
+
+.menuSection {
+  margin-top: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  width: 100%;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menuItem:not(:last-child) {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.menuItem:hover {
+  background-color: #f9fafb;
+}
+
+.menuIcon {
+  color: #6b7388;
+  width: 22px;
+  height: 22px;
+  margin-right: 16px;
+}
+
+.menuLabel {
+  flex: 1;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.chevronIcon {
+  color: #9ca3af;
+  width: 20px;
+  height: 20px;
+}
+
+.logoutButton .menuIcon,
+.logoutButton .menuLabel {
+  color: #ef4444; /* Warna merah untuk logout */
+}

@@ -1,208 +1,89 @@
-/* Salin semua kode di bawah ini dan timpa seluruh isi file Anda */
-/* src/app/(main)/home/home.module.css */
-
-.pageContainer {
-  padding: 20px;
-  font-family: 'Inter', sans-serif;
-}
-
 /* Header */
-.header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-.avatar {
-  border-radius: 50%;
-}
-.headerText {
-  flex-grow: 1;
-}
-.headerText h2 {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
-  color: #2c3e50; /* Diperbarui */
-}
-.headerText p {
-  font-size: 14px;
-  color: #8a94a6; /* Diperbarui */
-  margin: 0;
-}
-.headerIcons {
-  display: flex;
-  gap: 15px;
-  color: #2c3e50; /* Diperbarui */
+.heroHeader { background: linear-gradient(to right, #5392f9, #3b76e1); color: #fff; padding: 20px; padding-bottom: 80px; border-radius: 0 0 24px 24px; }
+.topBar { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 1.5rem; font-weight: 700; }
+.notificationIcon { width: 28px; height: 28px; cursor: pointer; }
+
+/* Panel Pencarian */
+.searchPanel { background-color: #fff; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); padding: 20px; margin: -60px 20px 20px 20px; position: relative; z-index: 10; }
+.searchField { display: flex; align-items: center; gap: 10px; padding: 12px 0; }
+.searchField + .searchField { border-top: 1px solid #e6e8ee; }
+.searchField img { width: 24px; height: 24px; opacity: 0.7; }
+.searchFieldInput { display: flex; flex-direction: column; }
+.searchFieldInput label { font-size: 0.8rem; color: #6b7388; }
+.searchFieldInput span { font-size: 1rem; font-weight: 600; color: #1a2b49;}
+.searchButton { display: block; text-align: center; width: 100%; background-color: #ff567d; color: #fff; border: none; padding: 15px; border-radius: 10px; font-size: 1.1rem; font-weight: 700; cursor: pointer; margin-top: 20px; text-decoration: none; }
+
+/* Quick Menu */
+.quickMenu { display: flex; justify-content: space-around; text-align: center; padding: 0 20px 20px 20px; }
+.menuItem { cursor: pointer; text-decoration: none; color: inherit;}
+.menuItemIcon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; background-color: #e7f0ff; }
+.menuItemIcon img { width: 28px; }
+.menuItem span { font-size: 0.85rem; }
+
+/* Konten */
+.contentSection {
+  margin-bottom: 20px;
 }
 
-/* Search Bar */
-.searchBar {
-  position: relative;
-  margin-bottom: 25px;
-}
-.searchIcon {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  color: #aaa;
-  font-size: 22px;
-}
-.searchBar input {
-  width: 100%;
-  padding: 15px 15px 15px 50px;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  background-color: #f9f9f9;
-  font-size: 16px;
-  outline: none;
-}
-.searchBar input:focus {
-  border-color: #4f46e5;
-}
-
-/* Categories */
-.categoryContainer {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-.categoryCard {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 15px 5px;
-  background-color: #f5f5f5;
-  border-radius: 12px;
-  font-size: 14px;
-  text-align: center;
-  cursor: pointer;
-}
-.categoryCard p {
-  color: #58606e; /* Ditambahkan */
-  font-weight: 500; /* Ditambahkan */
-}
-.categoryCard span {
-  font-size: 24px;
-}
-
-/* General Section Styling */
-.section {
-  margin-bottom: 30px;
-}
 .sectionTitle {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 1.3rem;
+  font-weight: 700;
   margin-bottom: 15px;
-  color: #334155; /* Diperbarui */
+  padding: 0 20px;
 }
 
-/* History Card */
-.historyCard {
+/* Slider */
+.kostSlider {
   display: flex;
-  gap: 15px;
-  padding: 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-.historyImage {
-  border-radius: 8px;
-  object-fit: cover;
-}
-.historyDetails h4 {
-  margin: 0 0 8px 0;
-  font-size: 16px;
-  color: #2c3e50; /* Diperbarui */
-}
-.historyDetails p {
-  margin: 0 0 5px 0;
-  font-size: 13px;
-  color: #64748b; /* Diperbarui */
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-/* Recommendation Cards */
-.recommendationScroll {
-  display: flex;
-  gap: 15px;
+  gap: 12px;
   overflow-x: auto;
-  padding-bottom: 15px; /* for shadow visibility */
-  -ms-overflow-style: none;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  scroll-snap-type: x mandatory; 
   scrollbar-width: none;
 }
-.recommendationScroll::-webkit-scrollbar {
+.kostSlider::-webkit-scrollbar {
   display: none;
 }
-.recomCard {
-  flex: 0 0 170px; /* Do not grow, do not shrink, base width 170px */
-  border: 1px solid #e0e0e0;
+
+/* --- REVISI UTAMA DI SINI --- */
+.kostCardLink {
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+  width: 240px;
+  scroll-snap-align: start;
+  
+  /* Tambahan untuk konsistensi tampilan kartu */
+  background-color: white;
   border-radius: 12px;
   overflow: hidden;
-  position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.recomImage {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
+
+.kostCardLink:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
-.recomDetails {
-  padding: 10px;
-}
-.recomDetails h4 {
-  font-size: 15px;
-  margin: 0 0 5px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #2c3e50; /* Diperbarui */
-}
-.location {
-  font-size: 12px;
-  color: #8a94a6; /* Diperbarui */
-  margin-bottom: 8px;
-}
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #64748b; /* Diperbarui */
-}
-.price {
-  font-size: 14px;
-  font-weight: 600;
-  color: #2c3e50;
-}
-.recomHeart {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  padding: 5px;
-  cursor: pointer;
-  color: #333; /* Diperbarui */
-}
-.recommendationScroll {
-  display: flex;         /* 1. Membuat semua kartu berjajar ke samping */
-  gap: 15px;
-  overflow-x: auto;      /* 2. INI KUNCINYA: Izinkan scroll horizontal jika kontennya 'meluber' */
-  padding-bottom: 15px;
-  
-  /* 3. Properti di bawah ini untuk menyembunyikan scrollbar agar terlihat rapi */
-  -ms-overflow-style: none;  
-  scrollbar-width: none;  
-}
-.recommendationScroll::-webkit-scrollbar {
-  display: none;
-}
+
+/* CATATAN PENTING:
+  Anda perlu menerapkan style serupa di dalam komponen KostCard.tsx Anda.
+  Contoh struktur di dalam KostCard:
+
+  <div className="cardContainer">
+    <Image src={kost.gambar} ... className="cardImage" />
+    <div className="cardInfo">
+      <h3 className="cardTitle">{kost.nama}</h3>
+      <p className="cardAddress">{kost.alamat}</p>
+      <p className="cardPrice">Rp {kost.hargaDiskon}</p>
+    </div>
+  </div>
+
+  Lalu di file CSS untuk KostCard, Anda bisa menambahkan:
+  .cardInfo { height: 120px; padding: 1rem; }
+  .cardTitle { ... }
+  ...dan seterusnya
+*/

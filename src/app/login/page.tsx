@@ -1,4 +1,4 @@
-// src/app/login/page.tsx
+// src/app/login/page.tsx (REVISI FINAL)
 
 "use client";
 
@@ -15,20 +15,20 @@ import {
 } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
 import { FirebaseError } from 'firebase/app';
-import { useAuth } from '@/context/AuthContext'; // GUNAKAN CONTEXT
+import { useAuth } from '@/context/AuthContext';
 
 const LoginPage = () => {
-  const { user, login, googleLogin } = useAuth(); // Gunakan fungsi dari context
+  const { user, login, googleLogin } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  // Auto-redirect jika user sudah login
   useEffect(() => {
     if (user) {
-      router.push('/main/home');
+      // REVISI 1: Arahkan ke root '/'
+      router.push('/'); 
     }
   }, [user, router]);
 
@@ -37,8 +37,9 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      await login(email, password); // Pakai context
-      router.push('/home');
+      await login(email, password);
+      // REVISI 2: Arahkan ke root '/' setelah login berhasil
+      router.push('/'); 
     } catch (err: any) {
       if (err instanceof FirebaseError) {
         if (err.code === 'auth/user-not-found') {
@@ -57,8 +58,9 @@ const LoginPage = () => {
   const handleGoogleLogin = async () => {
     setError(null);
     try {
-      await googleLogin(); // Pakai context
-      router.push('/home');
+      await googleLogin();
+      // REVISI 3: Arahkan ke root '/' setelah login berhasil
+      router.push('/'); 
     } catch (err: any) {
       if (err instanceof FirebaseError) {
         setError('Gagal login dengan Google.');
@@ -79,6 +81,7 @@ const LoginPage = () => {
         {error && <p className={styles.errorMessage}>{error}</p>}
 
         <form onSubmit={handleLogin} className={styles.form}>
+          {/* ... sisa kode form tidak berubah ... */}
           <div className={styles.inputGroup}>
             <MdOutlineMailOutline className={styles.icon} />
             <input

@@ -1,0 +1,47 @@
+.container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Ganti .overlay dengan .clickableOverlay dan sesuaikan propertinya */
+.clickableOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  color: white; /* Warisi warna teks putih */
+  background-color: rgba(0, 0, 0, 0.4);
+
+  /* Properti tambahan untuk membuatnya berfungsi baik sebagai link */
+  cursor: pointer;
+  text-decoration: none; /* Hapus garis bawah default dari link */
+  transition: background-color 0.3s ease;
+}
+
+/* Tambahkan efek hover sederhana pada seluruh area */
+.clickableOverlay:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+/* Class .button dan .button:hover tidak lagi diperlukan dan bisa dihapus */

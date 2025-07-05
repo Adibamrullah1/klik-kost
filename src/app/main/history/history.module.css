@@ -1,0 +1,131 @@
+.pageContainer {
+  padding: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a2b49;
+}
+
+.header p {
+  font-size: 16px;
+  color: #6b7388;
+  margin-top: 4px;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.historyCard {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.statusIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.statusIcon svg { /* Targetkan SVG di dalam div */
+  width: 28px;
+  height: 28px;
+}
+
+.iconSelesai {
+  background-color: #dcfce7; /* Hijau */
+  color: #166534;
+}
+
+.iconBatal {
+  background-color: #fee2e2; /* Merah */
+  color: #991b1b;
+}
+
+.historyDetails {
+  flex: 1;
+}
+
+.kostName {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a2b49;
+  margin: 0 0 8px 0;
+}
+
+.infoLine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b7388;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.statusLabel {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.statusSelesai {
+  color: #16a34a;
+}
+
+.statusBatal {
+  color: #dc2626;
+}
+
+/* Styling untuk saat riwayat kosong */
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+}
+
+.emptyState h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1a2b49;
+}
+
+.emptyState p {
+  color: #6b7388;
+  margin-top: 8px;
+}
+
+.emptyStateButton {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 24px;
+  background-color: #4f46e5;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.emptyStateButton:hover {
+  background-color: #4338ca;
+}

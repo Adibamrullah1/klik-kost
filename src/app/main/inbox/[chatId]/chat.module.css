@@ -1,0 +1,101 @@
+/* src/app/main/inbox/[chatId]/chat.module.css */
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.participantName {
+  font-weight: 600;
+  color: #111827;
+}
+
+.messageArea {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.messageBubble {
+  max-width: 75%;
+  padding: 0.5rem 0.8rem;
+  border-radius: 1.125rem;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+}
+
+.otherMessage {
+  background-color: white;
+  color: #1f2937;
+  align-self: flex-start;
+  border-top-left-radius: 0.25rem;
+}
+
+.myMessage {
+  background-color: #3b82f6;
+  color: white;
+  align-self: flex-end;
+  border-top-right-radius: 0.25rem;
+}
+
+.inputArea {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: white;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.textInput {
+  flex-grow: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+}
+
+.textInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+.sendButton {
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sendButton:hover {
+  background-color: #2563eb;
+}

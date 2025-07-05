@@ -1,0 +1,106 @@
+/* src/app/main/inbox/inbox.module.css */
+
+.pageContainer {
+  background-color: white;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a2b49;
+}
+
+.messageList {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.messageItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f0f2f5;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.messageItem:hover {
+  background-color: #f9fafb;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.messageContent {
+  flex-grow: 1;
+  overflow: hidden; /* Penting untuk text-overflow */
+}
+
+.senderInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+
+.senderName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a2b49;
+}
+
+.kostName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 4px;
+}
+
+.messagePreview {
+  font-size: 0.875rem;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Menampilkan "..." jika teks terlalu panjang */
+}
+
+.metaInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.unreadBadge {
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
